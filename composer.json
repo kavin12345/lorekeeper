@@ -20,6 +20,7 @@
         "illuminate/queue": "^5.6|^6.0|^7.0|^8.0",
         "illuminate/routing": "^5.6|^6.0|^7.0|^8.0",
         "illuminate/support": "^5.6|^6.0|^7.0|^8.0",
+        "inani/larapoll": "^3.1",
         "intervention/image": "^2.4",
         "laracasts/flash": "^3.0",
         "laravel/framework": "^8.0",

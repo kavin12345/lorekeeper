@@ -5,6 +5,7 @@ namespace App\Models\User;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Inani\Larapoll\Traits\Voter;
 use Auth;
 use Config;
 use Carbon\Carbon;
@@ -27,7 +28,7 @@ use App\Traits\Commenter;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Commenter;
+    use Notifiable, Commenter, Voter;
 
     /**
      * The attributes that are mass assignable.
