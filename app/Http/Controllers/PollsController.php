@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inani\Larapoll\Poll;
 
 class PollsController extends Controller
 {
@@ -17,6 +18,6 @@ class PollsController extends Controller
 
     public function getIndex()
     {
-        return view('polls.index');
+        return view('polls.index', ['polls' => Poll::orderBy('id', 'DESC')->paginate(10)]);
     }
 }
