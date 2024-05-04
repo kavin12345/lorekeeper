@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Inani\Larapoll\Poll;
 
 use Auth;
 
@@ -53,6 +54,33 @@ class NewsController extends Controller
     }
 
     /**
+     * Shows the create poll page. 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCreatePoll()
+    {
+        return view('admin.news.create_edit_poll', [
+            'poll' => new Poll
+        ]);
+    }
+    
+    /**
+     * Shows the edit poll page.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getEditPoll($id)
+    {
+        $poll = Poll::find($id);
+        if(!$poll) abort(404);
+        return view('admin.news.create_edit_poll', [
+            'poll' => $poll
+        ]);
+    }
+
+    /**
      * Creates or edits a news page.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -76,6 +104,32 @@ class NewsController extends Controller
         else {
             foreach($service->errors()->getMessages()['error'] as $error) flash($error)->error();
         }
+        return redirect()->back();
+    }
+
+    public function postCreateEditPoll(Request $request)
+    {
+        $data = $request->only(['question', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5']);
+        $poll = new Poll([
+            'question' => parse($data['question'])
+        ]); 
+        $options = array();
+        if (parse($data['option_1'] != '')) {
+            array_push($options, parse($data['option_1']));
+        }
+        if (parse($data['option_2'] != '')) {
+            array_push($options, parse($data['option_2']));
+        }
+        if (parse($data['option_3'] != '')) {
+            array_push($options, parse($data['option_3']));
+        }
+        if (parse($data['option_4'] != '')) {
+            array_push($options, parse($data['option_4']));
+        }
+        if (parse($data['option_5'] != '')) {
+            array_push($options, parse($data['option_5']));
+        }
+        $poll->addOptions($options)->generate();
         return redirect()->back();
     }
     
