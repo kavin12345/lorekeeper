@@ -15,22 +15,29 @@
 
 <div class="col-md-6">
     <div class="form-group">
-        {!! Form::label('Question') !!}
-        {!! Form::text('question', $poll->question, ['class' => 'form-control']) !!}
+        {!! Form::label('Title (required)') !!}
+        {!! Form::text('title', $poll->question, ['class' => 'form-control', 'required']) !!}
     </div>
 </div>
 
 <div class="col-md-6">
     <div class="form-group">
-        {!! Form::label('Option 1') !!}
-        {!! Form::text('option_1', '', ['class' => 'form-control']) !!}
+        {!! Form::label('Question (required)') !!}
+        {!! Form::text('question', $poll->question, ['class' => 'form-control', 'required']) !!}
     </div>
 </div>
 
 <div class="col-md-6">
     <div class="form-group">
-        {!! Form::label('Option 2') !!}
-        {!! Form::text('option_2', '', ['class' => 'form-control']) !!}
+        {!! Form::label('Option 1 (required)') !!}
+        {!! Form::text('option_1', '', ['class' => 'form-control', 'required']) !!}
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        {!! Form::label('Option 2 (required)') !!}
+        {!! Form::text('option_2', '', ['class' => 'form-control', 'required']) !!}
     </div>
 </div>
 

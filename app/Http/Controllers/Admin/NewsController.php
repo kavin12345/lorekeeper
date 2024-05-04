@@ -107,29 +107,37 @@ class NewsController extends Controller
         return redirect()->back();
     }
 
-    public function postCreateEditPoll(Request $request)
+    public function postCreateEditPoll(Request $request, NewsService $service)
     {
-        $data = $request->only(['question', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5']);
-        $poll = new Poll([
-            'question' => parse($data['question'])
-        ]); 
-        $options = array();
-        if (parse($data['option_1'] != '')) {
-            array_push($options, parse($data['option_1']));
+        try {
+            $data = $request->only(['title', 'question', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5']);
+            $poll = new Poll([
+                'question' => parse($data['question'])
+            ]); 
+            $options = array();
+            if (parse($data['option_1'] != '')) {
+                array_push($options, parse($data['option_1']));
+            }
+            if (parse($data['option_2'] != '')) {
+                array_push($options, parse($data['option_2']));
+            }
+            if (parse($data['option_3'] != '')) {
+                array_push($options, parse($data['option_3']));
+            }
+            if (parse($data['option_4'] != '')) {
+                array_push($options, parse($data['option_4']));
+            }
+            if (parse($data['option_5'] != '')) {
+                array_push($options, parse($data['option_5']));
+            }
+            $poll->addOptions($options)->generate();
+            $data['poll_id'] = $poll->id;
+            $news = $service->createNewsWithPoll($data, Auth::user());
+            flash('News with poll created successfully.')->success();
+        } catch(\Exception $e) { 
+            flash($e->getMessage())->error();
         }
-        if (parse($data['option_2'] != '')) {
-            array_push($options, parse($data['option_2']));
-        }
-        if (parse($data['option_3'] != '')) {
-            array_push($options, parse($data['option_3']));
-        }
-        if (parse($data['option_4'] != '')) {
-            array_push($options, parse($data['option_4']));
-        }
-        if (parse($data['option_5'] != '')) {
-            array_push($options, parse($data['option_5']));
-        }
-        $poll->addOptions($options)->generate();
+        
         return redirect()->back();
     }
     

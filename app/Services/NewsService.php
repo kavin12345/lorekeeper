@@ -47,6 +47,35 @@ class NewsService extends Service
     }
 
     /**
+     * Creates a news post with a poll.
+     *
+     * @param  array                  $data
+     * @param  \App\Models\User\User  $user
+     * @return bool|\App\Models\News
+     */
+    public function createNewsWithPoll($data, $user)
+    {
+        DB::beginTransaction();
+
+        try {
+            $newsData = ['title', 'text', 'is_visible', 'user_id', 'poll_id'];  
+            $newsData['title'] = parse($data['title']);
+            $newsData['parsed_text'] = parse($data['question']); 
+            $newsData['text'] = parse($data['question']); 
+            $newsData['is_visible'] = 1;
+            $newsData['user_id'] = $user->id;
+            $newsData['poll_id'] = parse($data['poll_id']);
+
+            $news = News::create($newsData);
+
+            if($news->is_visible) $this->alertUsers();
+            $this->commitReturn($news);
+        } catch(\Exception $e) { 
+            flash($e->getMessage())->error();
+        }
+    }
+
+    /**
      * Updates a news post.
      *
      * @param  \App\Models\News       $news

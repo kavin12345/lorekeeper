@@ -9,6 +9,9 @@
         <div class="parsed-text">
             {!! $news->parsed_text !!}
         </div>
+        @if($news->poll_id)
+            {{ PollWriter::draw(Inani\Larapoll\Poll::find($news->poll_id)) }}
+        @endif
     </div>
     <?php $commentCount = App\Models\Comment::where('commentable_type', 'App\Models\News')->where('commentable_id', $news->id)->count(); ?>
     @if(!$page)
