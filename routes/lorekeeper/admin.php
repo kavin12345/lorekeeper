@@ -252,7 +252,7 @@ Route::group(['prefix' => 'news', 'middleware' => 'power:edit_pages'], function(
     Route::get('editpoll/{id}', 'NewsController@getEditPoll');
     Route::get('delete/{id}', 'NewsController@getDeleteNews');
     Route::post('create', 'NewsController@postCreateEditNews');
-    Route::post('createpoll', 'NewsController@postCreateEditPoll');
+    Route::post('createpoll', 'NewsController@postCreatePoll');
     Route::post('edit/{id?}', 'NewsController@postCreateEditNews');
     Route::post('delete/{id}', 'NewsController@postDeleteNews');
 });

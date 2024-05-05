@@ -60,23 +60,8 @@ class NewsController extends Controller
      */
     public function getCreatePoll()
     {
-        return view('admin.news.create_edit_poll', [
+        return view('admin.news.create_poll', [
             'poll' => new Poll
-        ]);
-    }
-    
-    /**
-     * Shows the edit poll page.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function getEditPoll($id)
-    {
-        $poll = Poll::find($id);
-        if(!$poll) abort(404);
-        return view('admin.news.create_edit_poll', [
-            'poll' => $poll
         ]);
     }
 
@@ -107,7 +92,7 @@ class NewsController extends Controller
         return redirect()->back();
     }
 
-    public function postCreateEditPoll(Request $request, NewsService $service)
+    public function postCreatePoll(Request $request, NewsService $service)
     {
         $data = $request->only(['title', 'question', 'closing_time', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5']);
         if ($news = $service->createNewsWithPoll($data, Auth::user())) {

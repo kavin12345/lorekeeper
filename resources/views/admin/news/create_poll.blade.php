@@ -3,21 +3,17 @@
 @section('admin-title') News @endsection
 
 @section('admin-content')
-{!! breadcrumbs(['Admin Panel' => 'admin', 'News' => 'admin/news', ($poll->id ? 'Edit' : 'Create').' Poll' => $poll->id ? 'admin/news/editpoll/'.$poll->id : 'admin/news/createpoll']) !!}
+{!! breadcrumbs(['Admin Panel' => 'admin', 'News' => 'admin/news', 'Create Poll' => 'admin/news/createpoll']) !!}
 
-<h1>{{ $poll->id ? 'Edit' : 'Create' }} Poll
-    @if($poll->id)
-        <a href="#" class="btn btn-danger float-right delete-poll-button">Delete Poll</a>
-    @endif
-</h1>
+<h1>Create Poll</h1>
 
-{!! Form::open(['url' => $poll->id ? 'admin/news/editpoll/'.$poll->id : 'admin/news/createpoll', 'files' => true]) !!}
+{!! Form::open(['url' => 'admin/news/createpoll', 'files' => true]) !!}
 
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('Title (required)') !!}
-            {!! Form::text('title', $poll->question, ['class' => 'form-control', 'required']) !!}
+            {!! Form::text('title', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 
@@ -31,7 +27,7 @@
 
 <div class="form-group">
     {!! Form::label('Question (required)') !!}
-    {!! Form::text('question', $poll->question, ['class' => 'form-control', 'required']) !!}
+    {!! Form::text('question', '', ['class' => 'form-control', 'required']) !!}
 </div>
 
 <div class="col-md-6">
@@ -70,7 +66,7 @@
 </div>
 
 <div class="text-right">
-    {!! Form::submit($poll->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit('Create', ['class' => 'btn btn-primary']) !!}
 </div>
 
 @endsection
