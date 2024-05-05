@@ -10,6 +10,7 @@
 <p>You can create new news posts here. Creating a news post alerts every user that there is a new post, unless the post is marked as not viewable (see the post creation page for details).</p>
 
 <div class="text-right mb-3"><a class="btn btn-primary" href="{{ url('admin/news/create') }}"><i class="fas fa-plus"></i> Create New Post</a></div>
+<div class="text-right mb-3"><a class="btn btn-primary" href="{{ url('admin/news/createpoll') }}"><i class="fas fa-plus"></i> Create New Poll</a></div>
 @if(!count($newses))
     <p>No news found.</p>
 @else

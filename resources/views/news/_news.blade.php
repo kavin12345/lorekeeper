@@ -6,9 +6,28 @@
         </small>
     </div>
     <div class="card-body">
-        <div class="parsed-text">
-            {!! $news->parsed_text !!}
-        </div>
+        @if($news->poll_id)
+            <?php 
+                $poll = Inani\Larapoll\Poll::find($news->poll_id);
+                $ends_at = Carbon\Carbon::parse($poll->ends_at);
+                $closing_string = "";
+                if ($ends_at <= now()) {
+                    $closing_string = "This poll has closed ";
+                    $poll->canVoterSeeResult = 1;
+                } else {
+                    $closing_string = "This poll will close ";
+                    $poll->canVoterSeeResult = 0;
+                }
+            ?>
+            {!! $closing_string !!} {!! pretty_date($ends_at) !!}.
+            <div class="py-3">
+                {{ PollWriter::draw($poll) }}
+            </div>
+        @else
+            <div class="parsed-text">
+                {!! $news->parsed_text !!}
+            </div>
+        @endif
     </div>
     <?php $commentCount = App\Models\Comment::where('commentable_type', 'App\Models\News')->where('commentable_id', $news->id)->count(); ?>
     @if(!$page)

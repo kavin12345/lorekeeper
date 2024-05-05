@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Inani\Larapoll\Poll;
 
 use Auth;
 
@@ -53,6 +54,18 @@ class NewsController extends Controller
     }
 
     /**
+     * Shows the create poll page. 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCreatePoll()
+    {
+        return view('admin.news.create_poll', [
+            'poll' => new Poll
+        ]);
+    }
+
+    /**
      * Creates or edits a news page.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -74,6 +87,17 @@ class NewsController extends Controller
             return redirect()->to('admin/news/edit/'.$news->id);
         }
         else {
+            foreach($service->errors()->getMessages()['error'] as $error) flash($error)->error();
+        }
+        return redirect()->back();
+    }
+
+    public function postCreatePoll(Request $request, NewsService $service)
+    {
+        $data = $request->only(['title', 'question', 'closing_time', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5']);
+        if ($news = $service->createNewsWithPoll($data, Auth::user())) {
+            flash('News with poll created successfully.')->success();
+        } else {
             foreach($service->errors()->getMessages()['error'] as $error) flash($error)->error();
         }
         return redirect()->back();
