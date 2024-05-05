@@ -74,6 +74,10 @@ function pretty_date($timestamp, $showTime = true) {
    return '<abbr data-toggle="tooltip" title="' . $timestamp->format('F j Y' . ($showTime ? ', H:i:s' : '')) . ' ' . strtoupper($timestamp->timezone->getAbbreviatedName($timestamp->isDST())).'">' .$timestamp->diffForHumans() . '</abbr>';
 }
 
+function pretty_date_blah($timestamp, $showTime = true) {
+    return '<abbr data-toggle="tooltip" title="' . $timestamp->format('F j Y' ) . '</abbr>';
+ }
+
 /**
  * Formats a number to fit the number of digits given,
  * for generating masterlist numbers.

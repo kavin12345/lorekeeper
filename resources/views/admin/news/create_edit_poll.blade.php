@@ -13,18 +13,25 @@
 
 {!! Form::open(['url' => $poll->id ? 'admin/news/editpoll/'.$poll->id : 'admin/news/createpoll', 'files' => true]) !!}
 
-<div class="col-md-6">
-    <div class="form-group">
-        {!! Form::label('Title (required)') !!}
-        {!! Form::text('title', $poll->question, ['class' => 'form-control', 'required']) !!}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('Title (required)') !!}
+            {!! Form::text('title', $poll->question, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('Closing Time (required)') !!} {!! add_help('This is the time the poll will close. When closed, users will not be able to vote any more and results will be displayed.') !!}
+            {!! Form::text('closing_time', '', ['class' => 'form-control', 'id' => 'datepicker', 'required']) !!}
+        </div>
     </div>
 </div>
 
-<div class="col-md-6">
-    <div class="form-group">
-        {!! Form::label('Question (required)') !!}
-        {!! Form::text('question', $poll->question, ['class' => 'form-control', 'required']) !!}
-    </div>
+<div class="form-group">
+    {!! Form::label('Question (required)') !!}
+    {!! Form::text('question', $poll->question, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <div class="col-md-6">
@@ -66,4 +73,17 @@
     {!! Form::submit($poll->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>
 
+@endsection
+
+@section('scripts')
+@parent
+<script>
+$( document ).ready(function() {    
+    $( "#datepicker" ).datetimepicker({
+        dateFormat: "yy-mm-dd",
+        timeFormat: 'HH:mm:ss',
+    });
+});
+    
+</script>
 @endsection
